@@ -10,7 +10,6 @@ int main() {
     pid_t child = fork();
 
     if (child == 0) {
-        // fork() return 0 to child
 
         // tells the parent to TRACEME
         ptrace(PTRACE_TRACEME, 0, 0, 0);
