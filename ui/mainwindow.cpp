@@ -112,7 +112,7 @@ void MainWindow::saveSession() {
     QString filename  = sessionDir() + "/" + timestamp + "_" + slug + ".md";
 
     // Count event types for the summary.
-    int opens = 0, execs = 0, signals = 0;
+    int opens = 0, execs = 0, sigs = 0;
     QStringList signalNames;
     QStringList allLines;
 
@@ -122,7 +122,7 @@ void MainWindow::saveSession() {
         if      (line.startsWith("[OPEN]"))   opens++;
         else if (line.startsWith("[EXEC]"))   execs++;
         else if (line.startsWith("[SIGNAL]")) {
-            signals++;
+            sigs++;
             // Extract signal name — format is "[SIGNAL] SIGSTOP pid=..."
             QStringList parts = line.split(' ');
             if (parts.size() >= 2) signalNames.append(parts[1]);
@@ -131,7 +131,7 @@ void MainWindow::saveSession() {
 
     double durationSecs = m_startTime.msecsTo(QDateTime::currentDateTime()) / 1000.0;
 
-    QString signalSummary = QString::number(signals);
+    QString signalSummary = QString::number(sigs);
     if (!signalNames.isEmpty()) signalSummary += " (" + signalNames.join(", ") + ")";
 
     QFile file(filename);
